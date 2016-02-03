@@ -1,0 +1,52 @@
+#include "HareApp.h"
+#include "Moose.h"
+#include "AppFactory.h"
+#include "MooseSyntax.h"
+
+template<>
+InputParameters validParams<HareApp>()
+{
+  InputParameters params = validParams<MooseApp>();
+
+  params.set<bool>("use_legacy_uo_initialization") = false;
+  params.set<bool>("use_legacy_uo_aux_computation") = false;
+  return params;
+}
+
+HareApp::HareApp(const std::string & name, InputParameters parameters) :
+    MooseApp(name, parameters)
+{
+  srand(processor_id());
+
+  Moose::registerObjects(_factory);
+  HareApp::registerObjects(_factory);
+
+  Moose::associateSyntax(_syntax, _action_factory);
+  HareApp::associateSyntax(_syntax, _action_factory);
+}
+
+HareApp::~HareApp()
+{
+}
+
+// External entry point for dynamic application loading
+extern "C" void HareApp__registerApps() { HareApp::registerApps(); }
+void
+HareApp::registerApps()
+{
+  registerApp(HareApp);
+}
+
+// External entry point for dynamic object registration
+extern "C" void HareApp__registerObjects(Factory & factory) { HareApp::registerObjects(factory); }
+void
+HareApp::registerObjects(Factory & factory)
+{
+}
+
+// External entry point for dynamic syntax association
+extern "C" void HareApp__associateSyntax(Syntax & syntax, ActionFactory & action_factory) { HareApp::associateSyntax(syntax, action_factory); }
+void
+HareApp::associateSyntax(Syntax & /*syntax*/, ActionFactory & /*action_factory*/)
+{
+}
