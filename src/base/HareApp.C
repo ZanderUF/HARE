@@ -4,6 +4,8 @@
 #include "ModulesApp.h"
 #include "MooseSyntax.h"
 
+#include "LaplaceYoung.h"
+
 template<>
 InputParameters validParams<HareApp>()
 {
@@ -31,6 +33,14 @@ HareApp::HareApp(InputParameters parameters) :
 HareApp::~HareApp()
 {
 }
+
+//register kernel LaplaceYoung 
+void
+HareApp::registerObjects(Factory & factory)
+{
+	registerKernel(LaplaceYoung);
+}
+
 
 // External entry point for dynamic application loading
 extern "C" void HareApp__registerApps() { HareApp::registerApps(); }
