@@ -35,11 +35,11 @@ HareApp::~HareApp()
 }
 
 //register kernel LaplaceYoung 
-void
-HareApp::registerObjects(Factory & factory)
-{
-	registerKernel(LaplaceYoung);
-}
+//void
+//HareApp::registerObjects(Factory & factory)
+//{
+//	registerKernel(LaplaceYoung);
+//}
 
 
 // External entry point for dynamic application loading
